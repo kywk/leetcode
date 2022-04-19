@@ -2,15 +2,16 @@ LeetCode of kywk
 ================
 
 
-Development
------------
+Language
+--------
 
 ### Golang ###
 
 -   [A Tour of Go: Exercise](https://go.dev/tour/) / [code](go/tour)
 
-
 ### Node.js ###
+
+### Python ###
 
 
 
@@ -19,14 +20,10 @@ DevOps
 
 ### Linux ###
 
-
 ### k8s ###
 
 
-### Database ###
 
-
-
-Froentend
----------
+Feature Topic
+-------------
 

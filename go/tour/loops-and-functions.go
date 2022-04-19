@@ -16,22 +16,37 @@
 //
 // z := 1.0
 // z := float64(1)
+//
+// Next, change the loop condition to stop once the value has stopped changing
+// (or only changes by a very small amount). See if that's more or fewer than 10 iterations.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func Sqrt(x float64) float64 {
 	z := 1.0
-	for i := 0; i < 10; i++ {
+	last_z := z
+	change := 1.0
+	minimum_change := 0.000000000000001
+	iteration := 0
+
+	for change > minimum_change {
 		z -= (z*z - x) / (2 * z)
-		fmt.Println(z)
+		change = math.Abs(last_z - z)
+		last_z = z
+		iteration++
 	}
 
+	fmt.Println("This answer took ", iteration, " loop iterations")
 	return z
 }
 
 func main() {
-	for i := 1.0; i <= 4; i++ {
-		fmt.Printf("calculating Sqrt of %f is %f", i, Sqrt(i))
+	for i := 1.0; i < 4; i++ {
+		fmt.Println("calculating Sqrt of ", i)
+		fmt.Println(Sqrt(i))
 	}
 }

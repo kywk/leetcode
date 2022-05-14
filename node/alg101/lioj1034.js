@@ -19,16 +19,17 @@ rl.on('close', function() {
 
 function solve(lines) {
   let n = Number(lines[0]) % 26
-  let asc_z = 'z'.charCodeAt()
+  let ascA = 'a'.charCodeAt()
   let result = ''
   for (let i = 0; i < lines[1].length; i++) {
-    let asc_i = lines[1][i].charCodeAt() + n
-    let c = String.fromCharCode(asc_i > asc_z ? asc_i - 26 : asc_i)
+    let code = lines[1][i].charCodeAt() - ascA
+    let newCode = ((code + n) % 26) + ascA
+    let c = String.fromCharCode(newCode)
     result += c
   }
   console.log(result)
 }
 
 /*
-solve([10, "xray"])
+solve([10, "xray"]) // hbki
 //*/

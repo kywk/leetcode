@@ -17,7 +17,7 @@ rl.on('close', function() {
   solve(lines)
 })
 
-function digitsSum(num) {
+function sumDigits(num) {
   let sum = 0
   while (num > 0) {
     let d = num % 10
@@ -29,18 +29,13 @@ function digitsSum(num) {
 
 function solve(lines) {
   let tmp = lines[0].split(' ')
-  let sum = 0
-
-  for (let i = 0; i < tmp.length; i++) {
-    sum += digitsSum(tmp[i])
+  let num = Number(tmp[0] + tmp[1] + tmp[2])
+  while (num > 10) {
+    num = sumDigits(num)
   }
-
-  while (sum > 10) {
-    sum = digitsSum(sum)
-  }
-  console.log(sum)
+  console.log(num)
 }
 
-/*
+//*
 solve(["1991 11 7"])  // 2
 //*/

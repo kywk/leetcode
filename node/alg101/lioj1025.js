@@ -27,12 +27,12 @@ function isNarcissistic(n) {
     x = (x - digit) / 10
   }
 
-  let count = 0
+  let sum = 0
   for (let i = 0; i < digits.length; i++) {
-    count += Math.pow(digits[i], digits.length)
+    sum += digits[i] ** digits.length
   }
 
-  if (count == n)
+  if (sum == n)
     return true
   else
     return false

@@ -47,10 +47,13 @@ function solve(lines) {
   let m = Number(lines[0].split(' ')[0])
   let count = 0
 
-  while (m > 0)
-  {
-    m -= max2power(m)
-    count++
+  while (m > 0) {
+    count += m & 1
+    m >>= 1
   }
   console.log(count)
 }
+
+/*
+solve(["20"])
+//*/

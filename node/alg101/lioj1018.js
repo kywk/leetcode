@@ -1,5 +1,5 @@
 /*
-https://oj.lidemy.com/problem/1051
+https://oj.lidemy.com/problem/1018
  */
 
 var readline = require('readline');
@@ -18,19 +18,22 @@ rl.on('close', function() {
 })
 
 function solve(lines) {
-  let n = Number(lines[0])
   let nums = lines[1].split(' ').map(Number)
-  let count = 0
+  let big = 0, count = 1
+  nums[nums.length] = Infinity
 
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = i + 1; j < n; j++) {
-      if (nums[i] > nums[j])
-        count++
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === nums[i + 1])
+      count++
+    else {
+      if (count > big)
+        big = count
+      count = 1
     }
   }
-  console.log(count)
+  console.log(big)
 }
 
 /*
-solve(["5", "5 4 3 2 1"])
+solve(["10", "1 1 2 2 2 3 3 3 4 4 4 4 4"])
 //*/

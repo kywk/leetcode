@@ -8,21 +8,14 @@ function sort (nums) {
   }
 
   let middle = Math.floor(nums.length / 2)
-  let idx = 0
-  let left = []
-  for (; i < middle; i++)
-    left.push(nums[i])
-  let right = []
-  for (; i < nums.length; i++)
-    right.push(nums[j])
 
-  return merge(sort(left), sort(right))
+  return merge(sort(nums.slice(0, middle)), sort(nums.slice(middle, nums.length)))
 }
 
 function merge (left, right) {
   let result = []
   while ((left.length !== 0) && (right.length !== 0)) {
-    if (left[0] < right[o]) {
+    if (left[0] < right[0]) {
       result.push(left[0])
       left = left.slice(1)
     } else {
@@ -31,7 +24,7 @@ function merge (left, right) {
     }
   }
 
-  result.push(left)
-  result.push(right)
+  result = result.concat(left)
+  result = result.concat(right)
   return result
 }

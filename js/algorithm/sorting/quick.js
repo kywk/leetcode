@@ -19,6 +19,8 @@ function sort (nums, pivotIdx, endIdx) {
   if (idx < endIdx) {
     sort(nums, idx, endIdx)
   }
+
+  return nums
 }
 
 function swap (nums, i, j) {

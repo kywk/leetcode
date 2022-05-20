@@ -3,6 +3,7 @@ let counting = require("./counting")
 let insertion = require("./insertion")
 let selection = require("./selection")
 let merge = require('./merge')
+let quick = require('./quick')
 
 let numbers = 10
 let maxValue = 100
@@ -47,11 +48,11 @@ function main() {
       break
     case 'm':
     case 'M':
-      sorted = selection(orig)
+      sorted = merge(orig)
       break
     case 'q':
     case 'Q':
-      sorted = selection(orig)
+      sorted = quick(orig)
       break
   }
   console.log("Sorted: ", sorted)

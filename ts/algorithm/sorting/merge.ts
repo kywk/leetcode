@@ -7,15 +7,8 @@ function sort (nums: Array<number>): Array<number> {
     return nums
 
   let middle = Math.floor(nums.length / 2)
-  let idx = 0
-  let left: Array<number> = []
-  for (; idx < middle; idx++)
-    left.push(nums[idx])
-  let right: Array<number> = []
-  for (; idx < nums.length; idx++)
-    right.push(nums[idx])
 
-  return merge(sort(left), sort(right))
+  return merge(sort(nums.slice(0, middle)), sort(nums.slice(middle, nums.length)))
 }
 
 function merge (left: Array<number>, right: Array<number>): Array<number> {
@@ -33,6 +26,5 @@ function merge (left: Array<number>, right: Array<number>): Array<number> {
 
   result = result.concat(left)
   result = result.concat(right)
-
   return result
 }

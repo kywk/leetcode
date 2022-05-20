@@ -5,22 +5,8 @@ func Merge(nums []int) []int {
 	if length <= 1 {
 		return nums
 	}
-
 	middle := int(length / 2)
-	left := make([]int, middle)
-	i := 0
-	for i < middle {
-		left[i] = nums[i]
-		i++
-	}
-
-	right := make([]int, length-middle)
-	for j := 0; j < length-middle; j++ {
-		right[j] = nums[i]
-		i++
-	}
-
-	return merge(Merge(left), Merge(right))
+	return merge(Merge(nums[:middle]), Merge(nums[middle:]))
 }
 
 func merge(left, right []int) []int {

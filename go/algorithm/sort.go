@@ -1,10 +1,10 @@
 package main
 
 import (
+	"algorithm/sorting"
 	"fmt"
 	"math/rand"
 	"os"
-	"sorting/Sort"
 	"strconv"
 	"time"
 )
@@ -54,17 +54,17 @@ func main() {
 	var sorted []int
 	switch args[0][0] {
 	case 98, 66:
-		sorted = Sort.Bubble(orig)
+		sorted = sorting.Bubble(orig)
 	case 99, 67:
-		sorted = Sort.Counting(orig)
+		sorted = sorting.Counting(orig)
 	case 115, 83:
-		sorted = Sort.Selection(orig)
+		sorted = sorting.Selection(orig)
 	case 105, 73:
-		sorted = Sort.Insertion(orig)
+		sorted = sorting.Insertion(orig)
 	case 109, 77:
-		sorted = Sort.Merge(orig)
+		sorted = sorting.Merge(orig)
 	case 113, 81:
-		sorted = Sort.Quick(orig)
+		sorted = sorting.Quick(orig)
 	default:
 		break
 	}

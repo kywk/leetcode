@@ -1,4 +1,4 @@
-package Sort
+package sorting
 
 func Merge(nums []int) []int {
 	length := len(nums)

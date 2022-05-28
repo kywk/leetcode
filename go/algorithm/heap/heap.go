@@ -74,20 +74,20 @@ func (h *Heap) siftUp(idx int) {
 }
 
 func (h *Heap) siftDown(idx int) {
-	isLChildLarger := false
-	isRChildLarger := false
+	isLeftLarger := false
+	isRightLarger := false
 
 	left := idx << 1
 	if left < len(*h) && (*h)[left] > (*h)[idx] {
-		isLChildLarger = true
+		isLeftLarger = true
 	}
 
 	right := left + 1
 	if right < len(*h) && (*h)[right] > (*h)[idx] {
-		isRChildLarger = true
+		isRightLarger = true
 	}
 
-	if isLChildLarger && isRChildLarger {
+	if isLeftLarger && isRightLarger {
 		if (*h)[right] > (*h)[left] {
 			(*h)[right], (*h)[idx] = (*h)[idx], (*h)[right]
 			h.siftDown(right)
@@ -95,11 +95,11 @@ func (h *Heap) siftDown(idx int) {
 			(*h)[left], (*h)[idx] = (*h)[idx], (*h)[left]
 			h.siftDown(left)
 		}
-	} else if isRChildLarger {
-		(*h)[right], (*h)[idx] = (*h)[idx], (*h)[right]
-		h.siftDown(right)
-	} else if isLChildLarger {
+	} else if isLeftLarger {
 		(*h)[left], (*h)[idx] = (*h)[idx], (*h)[left]
 		h.siftDown(left)
+	} else if isRightLarger {
+		(*h)[right], (*h)[idx] = (*h)[idx], (*h)[right]
+		h.siftDown(right)
 	}
 }

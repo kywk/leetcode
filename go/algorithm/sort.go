@@ -9,20 +9,7 @@ import (
 	"time"
 )
 
-const LENTH = 100
-const MAX_VALUE = 1000
-
-func generateSlice(len, max int) []int {
-	rand.Seed(time.Now().UTC().UnixNano())
-	result := make([]int, len)
-	for i, _ := range result {
-		result[i] = rand.Intn(max)
-	}
-
-	return result
-}
-
-func testResult(sorted []int) bool {
+func testSort(sorted []int) bool {
 	for i := 1; i < len(sorted); i++ {
 		if sorted[i] < sorted[i-1] {
 			return false
@@ -31,10 +18,9 @@ func testResult(sorted []int) bool {
 	return true
 }
 
-func main() {
+func mainSort(args []string) {
 	length := LENTH
 	max := MAX_VALUE
-	args := os.Args[1:]
 	argv := len(args)
 	if argv < 1 {
 		fmt.Println("Usage sort sort_algorithm [lengh] [max_value]")
@@ -48,7 +34,6 @@ func main() {
 
 	rand.Seed(time.Now().UTC().UnixNano())
 	orig := generateSlice(length, max)
-	fmt.Println("A", args[0][0])
 	fmt.Printf("Origin: %v\n", orig)
 
 	var sorted []int
@@ -70,11 +55,15 @@ func main() {
 	}
 	fmt.Printf("Sorted: %v\n", sorted)
 
-	if testResult(sorted) {
+	if testSort(sorted) {
 		fmt.Println(">> Pass")
 		os.Exit(0)
 	} else {
 		fmt.Println(">> Fail")
 		os.Exit(-1)
 	}
+}
+
+func main() {
+	mainSort(os.Args[1:])
 }

@@ -1,29 +1,30 @@
-let Heap = require("./heap")
+import { Heap } from "./heap"
 
 const TEST_TIMES = 10
 
-let numbers = 7
-let maxValue = 100
+let count = 10
+let max = 100
 
-function testHeap(data) {
+function testHeap(data: Array<number>): Boolean {
   for (let i = 1; i < data.length>>1; i++) {
     if ((data[i] < data[i<<1]) ||
-        (data[i] < data[i<<1 + 1]))
+        (data[i] < data[(i<<1) + 1])) {
       return false
+    }
   }
   return true
 }
 
-function mainHeap(args) {
+function mainHeap(args: Array<string>) {
   if (args.length > 0)
-    numbers = parseInt(args[0])
+    count = parseInt(args[0])
   if (args.length > 1)
-    maxValue = parseInt(args[1])
+    max = parseInt(args[0])
 
-  let orig = []
-  for (let i = 0; i < numbers; i++)
-    orig.push(Math.floor(Math.random() * maxValue))
-  console.log("Orig: ", orig)
+  let orig: Array<number> = new Array(count)
+  for (let i = 0; i < orig.length; i++)
+    orig[i] = Math.floor(Math.random() * max)
+  console.log("Origin: ", orig)
 
   let heap = new Heap(orig)
   console.log("Heap: ", heap.data)
@@ -31,7 +32,8 @@ function mainHeap(args) {
   for (let i = 0; i < TEST_TIMES; i++) {
     let j = Math.floor(Math.random() * 4)
     let idx = Math.floor(Math.random() * (heap.data.length - 1)) + 1
-    let value = Math.floor(Math.random() * maxValue)
+    let value = Math.floor(Math.random() * max)
+
     switch (j) {
       case 0:
         heap.insert(value)
@@ -39,7 +41,7 @@ function mainHeap(args) {
         break
       case 1:
         let m = heap.extractMax()
-        console.log("Current Max:", m, heap.data)
+        console.log("Current MAx:", m, heap.data)
         break
       case 2:
         heap.updateKey(idx, value)

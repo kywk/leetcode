@@ -8,13 +8,14 @@ import insertion
 import merge
 import quick
 
-count = 10
-maxValue = 1000
-
 def main(args):
-  if len(args) > 1:
-    count = int(args[2])
+  count = 10
+  maxValue = 1000
+
   if len(args) > 2:
+    print("test", args, len(args))
+    count = int(args[2])
+  if len(args) > 3:
     maxValue = int(args[3])
 
   nums = []

@@ -1,4 +1,4 @@
-package Sort
+package sorting
 
 func Quick(nums []int) []int {
 	quick(&nums, 0, len(nums)-1)

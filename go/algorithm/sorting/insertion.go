@@ -2,14 +2,16 @@
  *
  */
 
-package Sort
+package sorting
 
-func Bubble(nums []int) []int {
+func Insertion(nums []int) []int {
 	len := len(nums)
-	for i := 0; i < len-1; i++ {
-		for j := 0; j < len-1-i; j++ {
-			if nums[j] > nums[j+1] {
-				nums[j], nums[j+1] = nums[j+1], nums[j]
+	for i := 1; i < len; i++ {
+		for j := i; j > 0; j-- {
+			if nums[j-1] > nums[j] {
+				nums[j-1], nums[j] = nums[j], nums[j-1]
+			} else {
+				continue
 			}
 		}
 	}
@@ -24,7 +26,7 @@ func main() {
 		nums[i] = rand.Intn(1e4)
 	}
 	fmt.Printf("Origin: \n%v \n", nums)
-	Bubble(nums)
+	Insertion(nums)
 	fmt.Printf("Result: \n%v \n", nums)
 }
 */

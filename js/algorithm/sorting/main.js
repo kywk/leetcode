@@ -16,10 +16,9 @@ function test(sorted) {
   return true
 }
 
-function main() {
+function mainSort(args) {
   let orig = []
 
-  let args = process.argv.slice(2)
   if (args.length > 1)
     numbers = parseInt(args[1])
   if (args.length > 2)
@@ -66,4 +65,4 @@ function main() {
   }
 }
 
-main()
+mainSort(process.argv.slice(2))

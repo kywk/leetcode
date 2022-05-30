@@ -2,7 +2,7 @@
  *
  */
 
-package Sort
+package sorting
 
 const MAX_ITEMS = 7
 

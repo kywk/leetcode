@@ -2,7 +2,7 @@
  *
  */
 
-package Sort
+package sorting
 
 func Selection(nums []int) []int {
 	len := len(nums)

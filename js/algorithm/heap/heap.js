@@ -1,4 +1,12 @@
 class Heap {
+  static sort(nums) {
+    let h = new Heap(nums)
+    let result = new Array(nums.length)
+    for (let i = nums.length - 1; i >= 0; i--)
+      result[i] = h.extractMax()
+    return result
+  }
+
   constructor(nums) {
     this._data = [-1].concat(nums)
     for (let i = this._data.length >> 1; i >= 1; i--)

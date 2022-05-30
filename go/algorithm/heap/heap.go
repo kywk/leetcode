@@ -10,9 +10,19 @@ import "fmt"
 
 type Heap []int
 
-func NewHeap() *Heap {
+func NewHeap(nums []int) *Heap {
 	h := make(Heap, 0)
+	h.Create(nums)
 	return &h
+}
+
+func Sort(nums []int) []int {
+	h := NewHeap(nums)
+	result := make([]int, len(nums))
+	for i := len(nums) - 1; i >= 0; i-- {
+		result[i], _ = h.ExtractMax()
+	}
+	return result
 }
 
 func (h *Heap) String() string {
@@ -95,11 +105,11 @@ func (h *Heap) siftDown(idx int) {
 			(*h)[left], (*h)[idx] = (*h)[idx], (*h)[left]
 			h.siftDown(left)
 		}
-	} else if isLeftLarger {
-		(*h)[left], (*h)[idx] = (*h)[idx], (*h)[left]
-		h.siftDown(left)
 	} else if isRightLarger {
 		(*h)[right], (*h)[idx] = (*h)[idx], (*h)[right]
 		h.siftDown(right)
+	} else if isLeftLarger {
+		(*h)[left], (*h)[idx] = (*h)[idx], (*h)[left]
+		h.siftDown(left)
 	}
 }

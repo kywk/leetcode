@@ -31,7 +31,18 @@ func testHeap(h heap.Heap) bool {
 	return true
 }
 
+func testSort(sorted []int) bool {
+	for i := 1; i < len(sorted); i++ {
+		if sorted[i] < sorted[i-1] {
+			return false
+		}
+	}
+	return true
+}
+
 func mainHeap(args []string) {
+	rand.Seed(time.Now().UTC().UnixNano())
+
 	length := LENTH
 	max := MAX_VALUE
 	argv := len(args)
@@ -42,12 +53,10 @@ func mainHeap(args []string) {
 		max, _ = strconv.Atoi(args[1])
 	}
 
-	rand.Seed(time.Now().UTC().UnixNano())
 	orig := generateSlice(length, max)
 	fmt.Printf("Origin: %v\n", orig)
 
-	h := heap.NewHeap()
-	h.Create(orig)
+	h := heap.NewHeap(orig)
 	fmt.Println("Heap:", h)
 
 	// Random operation of Heap
@@ -69,10 +78,22 @@ func mainHeap(args []string) {
 	}
 
 	if testHeap(*h) {
-		fmt.Println(">> Pass")
+		fmt.Println(">> Test Heap Pass")
+	} else {
+		fmt.Println(">> Test Heap Fail")
+		os.Exit(-1)
+	}
+
+	orig = generateSlice(length, max)
+	fmt.Printf("Origin: %v\n", orig)
+	sorted := heap.Sort(orig)
+	fmt.Printf("Sorted: %v\n", sorted)
+
+	if testSort(sorted) {
+		fmt.Println(">> Test Sort Pass")
 		os.Exit(0)
 	} else {
-		fmt.Println(">> Fail")
+		fmt.Println(">> Test Sort Fail")
 		os.Exit(-1)
 	}
 }

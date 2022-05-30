@@ -1,4 +1,12 @@
 export class Heap {
+  static sort(nums: Array<number>): Array<number> {
+    let h = new Heap(nums)
+    let result = new Array(nums.length)
+    for (let i = nums.length - 1; i >= 0; i--)
+      result[i] = h.extractMax()
+    return result
+  }
+
   _data: Array<number>
 
   constructor(nums: Array<number>) {
@@ -6,6 +14,7 @@ export class Heap {
     for (let i = this._data.length >> 1; i >= 1; i--)
       this.siftDown(i)
   }
+
 
   get data(): Array<number> {
     return this._data.slice(1)

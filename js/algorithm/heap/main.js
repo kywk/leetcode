@@ -14,6 +14,14 @@ function testHeap(data) {
   return true
 }
 
+function testSort(sorted) {
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i - 1] > sorted[i])
+      return false
+  }
+  return true
+}
+
 function mainHeap(args) {
   if (args.length > 0)
     numbers = parseInt(args[0])
@@ -51,10 +59,24 @@ function mainHeap(args) {
   }
 
   if (testHeap(heap._data)) {
-    console.log(">> Pass")
+    console.log(">> Test Heap Pass")
+  } else {
+    console.log(">> Test Heap Fail")
+    process.exit(-1)
+  }
+
+  orig = []
+  for (let i = 0; i < numbers; i++)
+    orig.push(Math.floor(Math.random() * maxValue))
+  console.log("Origin: ", orig)
+  let sorted = Heap.sort(orig)
+  console.log("Sorted:", sorted)
+
+  if (testSort(sorted)) {
+    console.log(">> Test Sort Pass")
     process.exit(0)
   } else {
-    console.log(">> Fail")
+    console.log(">> Test Sort Fail")
     process.exit(-1)
   }
 }

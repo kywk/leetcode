@@ -9,7 +9,7 @@ type BST struct {
 type INode interface {
 	search(int) bool
 	insert(int)
-	remove(int) bool
+	remove(int)
 	findMin() int
 	findMax() int
 	findPredecessor(int) int
@@ -21,7 +21,6 @@ func NewBST(nums []int) *BST {
 	root := newAVLNode(-1)
 	bst := BST{root}
 	for _, v := range nums {
-		fmt.Println(">> insert ", v)
 		bst.Insert(v)
 	}
 	return &bst
@@ -32,11 +31,13 @@ func (bst *BST) Search(v int) bool {
 }
 
 func (bst *BST) Insert(v int) {
+	fmt.Println(">> insert ", v)
 	bst.root.insert(v)
 }
 
-func (bst *BST) Remove(v int) bool {
-	return bst.root.remove(v)
+func (bst *BST) Remove(v int) {
+	fmt.Println(">> remove ", v)
+	bst.root.remove(v)
 }
 
 func (bst *BST) FindMin() int {

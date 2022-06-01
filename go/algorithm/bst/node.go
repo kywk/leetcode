@@ -41,12 +41,8 @@ func (n *Node) insert(v int) {
 	}
 }
 
-func (n *Node) remove(v int) bool {
-	if n.doRemove(v) == nil {
-		return false
-	} else {
-		return true
-	}
+func (n *Node) remove(v int) {
+	n.doRemove(v)
 }
 
 func (n *Node) doRemove(v int) *Node {
@@ -74,7 +70,7 @@ func (n *Node) doRemove(v int) *Node {
 		return n.left
 	}
 
-	successor := n.right.findMaxNode()
+	successor := n.right.findMinNode()
 	n.value, successor.value = successor.value, n.value
 	n.right = n.right.doRemove(v)
 	return n
@@ -100,14 +96,14 @@ func (n *Node) findMax() int {
 	return n.right.findMax()
 }
 
-func (n *Node) findMaxNode() *Node {
+func (n *Node) findMinNode() *Node {
 	if n == nil {
 		return nil
 	}
-	if n.right == nil {
+	if n.left == nil {
 		return n
 	}
-	return n.right.findMaxNode()
+	return n.left.findMinNode()
 }
 
 func (n *Node) findPredecessor(v int) int {

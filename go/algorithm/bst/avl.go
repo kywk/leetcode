@@ -127,12 +127,8 @@ func (avl *AVLNode) search(v int) bool {
 	}
 }
 
-func (avl *AVLNode) remove(v int) bool {
-	if avl.doRemove(v) == nil {
-		return false
-	} else {
-		return true
-	}
+func (avl *AVLNode) remove(v int) {
+	avl.doRemove(v)
 }
 
 func (avl *AVLNode) doRemove(v int) *AVLNode {

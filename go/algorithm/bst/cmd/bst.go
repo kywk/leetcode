@@ -19,7 +19,10 @@ func mainBST(args []string) {
 		b.FindPredecessor(64),
 		b.FindSuccessor(60),
 	)
+	fmt.Println(b.Inorder())
 
+	b.Remove(54)
+	b.Insert(77)
 	fmt.Println(b.Inorder())
 }
 

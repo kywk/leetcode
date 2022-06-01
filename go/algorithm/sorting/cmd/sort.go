@@ -9,6 +9,18 @@ import (
 	"time"
 )
 
+const LENTH = 10
+const MAX_VALUE = 100
+
+func generateSlice(len, max int) []int {
+	rand.Seed(time.Now().UTC().UnixNano())
+	result := make([]int, len)
+	for i, _ := range result {
+		result[i] = rand.Intn(max)
+	}
+	return result
+}
+
 func testSort(sorted []int) bool {
 	for i := 1; i < len(sorted); i++ {
 		if sorted[i] < sorted[i-1] {

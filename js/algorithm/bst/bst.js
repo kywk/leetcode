@@ -1,36 +1,53 @@
-let Node = require("./node.js")
+let BSTNode = require("./bst_node")
+
+const NOT_FOUND = -1
 
 class BST {
-  constructor(nums) {
+  constructor(data) {
     this.root = null
-    for (let i = 0; i < nums.length; i++)
-      this.insert(nums[i])
+    if (typeof(data) === 'number') {
+      this.root = new BSTNode(data)
+    } else if (Array.isArray(data)) {
+      this.root = new BSTNode(data[0])
+      for (let i = 1; i < data.length; i++)
+        this.insert(nums[i])
+    }
   }
 
   search(val) {
     return this.root === null ? false : this.root.search(val)
   }
 
+  findMax() {
+    return this.root === null ? NOT_FOUND : this.root.findMax()
+  }
+
+  findMin() {
+    return this.root === null ? NOT_FOUND : this.root.findMin()
+  }
+
   findPredecessor(val) {
-    return this.root === null ? -1 : this.root.findPredecessor(val)
+    return this.root === null ? NOT_FOUND : this.root.findPredecessor(val)
   }
 
   findSuccessor(val) {
-    return this.root === null ? -1 : this.root.findSuccessor(val)
+    return this.root === null ? NOT_FOUND : this.root.findSuccessor(val)
   }
 
   insert(val) {
-    console.log(">> insert:", val)
     if (this.root === null)
-      this.root = new Node(val)
-    else
-      this.root.insert(val)
+      return
+
+    console.log(">> insert:", val)
+    this.root.insert(val)
   }
 
   remove(val) {
+    if (this.root === null)
+      return
+
     console.log(">> remove:", val)
-    if (this.root !== null)
-      this.root.remove(val)
+    this.root = this.root.remove(val)
   }
 
   inorder() {

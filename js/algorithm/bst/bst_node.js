@@ -1,6 +1,8 @@
-class Node {
-  constructor(val) {
-    this.value = val
+const NOT_FOUND = -1
+
+class BSTNode {
+  constructor(data) {
+    this.value = data
     this.left = null
     this.right = null
   }
@@ -9,34 +11,35 @@ class Node {
     if (currentNode === null)
       return null
 
-    if (currentNode.value > val) {
-      currentNode.left = Node._removeHelper(val, currentNode.left)
-      return currentNode
+    let result
+    if (val < currentNode.value) {
+      currentNode.left = BSTNode._removeHelper(val, currentNode.left)
+      result = currentNode
+    } else if (currentNode.value < val) {
+      currentNode.right = BSTNode._removeHelper(val, currentNode.right)
+      result = currentNode
+    } else {
+      if ((currentNode.left === null) && (currentNode.right === null))
+        return null
+      else if (currentNode.left === null)
+        result = currentNode.right
+      else if (currentNode.right === null)
+        result = currentNode.left
+      else {
+        let successor = currentNode.right.findMin()
+        currentNode.value = successor
+        currentNode.right = BSTNode._removeHelper(successor, currentNode.right)
+        result = currentNode
+      }
     }
-    if (currentNode.value < val) {
-      currentNode.right = Node._removeHelper(val, currentNode.right)
-      return currentNode
-    }
-
-    if ((currentNode.left === null) && (currentNode.right === null))
-      return null
-    if (currentNode.left === null)
-      return currentNode.right
-    if (currentNode.right === null)
-      return currentNode.left
-
-    let successor = currentNode.right.findMin()
-    currentNode.value = successor
-    currentNode.right = Node._removeHelper(successor, currentNode.right)
-    return currentNode
+    return result
   }
 
   search(val) {
-    if (this.value == val) {
+    if (this.value === val)
       return true
-    }
 
-    if (this.value > v)
+    if (this.value > val)
       return this.left === null ? false : this.left.search(val)
     else
       return this.right === null ? false : this.right.search(val)
@@ -55,7 +58,7 @@ class Node {
   }
 
   findPredecessor(val) {
-    let predecessor = -1
+    let predecessor = NOT_FOUND
     let node = this
     while ((node !== null) && (node.value !== val)) {
       if (node.value < val) {
@@ -67,8 +70,7 @@ class Node {
     }
 
     if (node === null)
-      return -1
-
+      return NOT_FOUND
     if (node.left !== null)
       return node.left.findMax()
     else
@@ -76,7 +78,7 @@ class Node {
   }
 
   findSuccessor(val) {
-    let successor = -1
+    let successor = NOT_FOUND
     let node = this
     while ((node !== null) && (node.value !== val)) {
       if (node.value > val) {
@@ -88,7 +90,7 @@ class Node {
     }
 
     if (node === null)
-      return -1
+      return NOT_FOUND
     if (node.right !== null)
       return node.right.findMin()
     else
@@ -96,21 +98,21 @@ class Node {
   }
 
   insert(val) {
-    if (this.value > val) {
+    if (val < this.value) {
       if (this.left === null)
-        this.left = new Node(val)
+        this.left = new BSTNode(val)
       else
         this.left.insert(val)
     } else {
       if (this.right === null)
-        this.right = new Node(val)
+        this.right = new BSTNode(val)
       else
         this.right.insert(val)
     }
   }
 
   remove(val) {
-    Node.__removeHelper(val, this)
+    return BSTNode._removeHelper(val, this)
   }
 
   inorder() {
@@ -124,4 +126,4 @@ class Node {
   }
 }
 
-module.exports = Node
+module.exports = BSTNode

@@ -2,58 +2,102 @@ package bst
 
 import "fmt"
 
-type BST struct {
-	root INode
-}
+const NOTFOUND = -1
 
-type INode interface {
+type IBSTNode interface {
 	search(int) bool
 	insert(int)
-	remove(int)
+	remove(int) IBSTNode
 	findMin() int
 	findMax() int
 	findPredecessor(int) int
 	findSuccessor(int) int
-	inorder(nums *[]int)
+	inorder(*[]int)
 }
 
-func NewBST(nums []int) *BST {
-	root := newAVLNode(-1)
-	bst := BST{root}
-	for _, v := range nums {
-		bst.Insert(v)
+type BST struct {
+	root IBSTNode
+}
+
+func NewBST(data interface{}) *BST {
+	switch t := data.(type) {
+	case int:
+		return &BST{newBSTNode(t)}
+	case []int:
+		bst := &BST{newBSTNode(t[0])}
+		for i := 1; i < len(t); i++ {
+			bst.Insert(t[i])
+		}
+		return bst
+	default:
+		return nil
 	}
-	return &bst
 }
 
-func (bst *BST) Search(v int) bool {
-	return bst.root.search(v)
+func NewAVL(data interface{}) *BST {
+	switch t := data.(type) {
+	case int:
+		return &BST{newAVLNode(t)}
+	case []int:
+		bst := &BST{newAVLNode(t[0])}
+		for i := 1; i < len(t); i++ {
+			bst.Insert(t[i])
+		}
+		return bst
+	default:
+		return nil
+	}
 }
 
-func (bst *BST) Insert(v int) {
-	fmt.Println(">> insert ", v)
-	bst.root.insert(v)
+func (bst *BST) Search(val int) bool {
+	if bst.root == nil {
+		return false
+	}
+	return bst.root.search(val)
 }
 
-func (bst *BST) Remove(v int) {
-	fmt.Println(">> remove ", v)
-	bst.root.remove(v)
+func (bst *BST) Insert(val int) {
+	fmt.Println(">> insert ", val)
+	if bst.root == nil {
+		return
+	}
+	bst.root.insert(val)
+}
+
+func (bst *BST) Remove(val int) {
+	fmt.Println(">> remove ", val)
+	if bst.root == nil {
+		return
+	}
+	bst.root = bst.root.remove(val)
 }
 
 func (bst *BST) FindMin() int {
+	if bst.root == nil {
+		return NOTFOUND
+	}
 	return bst.root.findMin()
 }
 
 func (bst *BST) FindMax() int {
+	if bst.root == nil {
+		return NOTFOUND
+	}
 	return bst.root.findMax()
 }
 
-func (bst *BST) FindPredecessor(v int) int {
-	return bst.root.findPredecessor(v)
+func (bst *BST) FindPredecessor(val int) int {
+	if bst.root == nil {
+		return NOTFOUND
+	}
+	return bst.root.findPredecessor(val)
 }
 
-func (bst *BST) FindSuccessor(v int) int {
-	return bst.root.findSuccessor(v)
+func (bst *BST) FindSuccessor(val int) int {
+	if bst.root == nil {
+		return NOTFOUND
+	}
+	return bst.root.findSuccessor(val)
 }
 
 func (bst *BST) Inorder() []int {

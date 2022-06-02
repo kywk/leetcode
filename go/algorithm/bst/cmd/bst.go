@@ -12,7 +12,7 @@ func mainBST(args []string) {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	nums := []int{40, 54, 89, 29, 37, 18, 64, 51, 60, 55, 98, 92}
-	b := bst.NewBST(nums)
+	b := bst.NewAVL(nums)
 	fmt.Println(
 		"test: ",
 		b.FindMax(),

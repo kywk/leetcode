@@ -1,9 +1,12 @@
-let BSTNode = require("./bst_node")
+import { BSTNode } from "./bst_node"
 
 const NOT_FOUND = -1
 
-class BST {
-  constructor(data) {
+export class BST {
+
+  root: BSTNode | null
+
+  constructor(data: number | Array<number> | null) {
     this.root = null
     if (typeof(data) === 'number') {
       this.root = new BSTNode(data)
@@ -14,27 +17,27 @@ class BST {
     }
   }
 
-  search(val) {
+  search(val: number): boolean {
     return this.root === null ? false : this.root.search(val)
   }
 
-  findMax() {
+  findMax(): number {
     return this.root === null ? NOT_FOUND : this.root.findMax()
   }
 
-  findMin() {
+  findMin(): number {
     return this.root === null ? NOT_FOUND : this.root.findMin()
   }
 
-  findPredecessor(val) {
+  findPredecessor(val: number): number {
     return this.root === null ? NOT_FOUND : this.root.findPredecessor(val)
   }
 
-  findSuccessor(val) {
+  findSuccessor(val: number): number {
     return this.root === null ? NOT_FOUND : this.root.findSuccessor(val)
   }
 
-  insert(val) {
+  insert(val: number) {
     if (this.root === null)
       return
 
@@ -42,7 +45,7 @@ class BST {
     this.root.insert(val)
   }
 
-  remove(val) {
+  remove(val: number) {
     if (this.root === null)
       return
 
@@ -50,9 +53,7 @@ class BST {
     this.root = this.root.remove(val)
   }
 
-  inorder() {
+  inorder(): Array<number> | null {
     return this.root === null ? null : this.root.inorder()
   }
 }
-
-module.exports = BST

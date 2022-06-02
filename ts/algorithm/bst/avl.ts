@@ -1,11 +1,11 @@
-let BST = require("./bst")
-let AVLNode = require("./avl_node")
+import { AVLNode } from './avl_node';
+import { BST } from './bst';
 
-class AVL extends BST {
-  constructor(data) {
-    super()
+export class AVL extends BST {
+  constructor(data: number | Array<number>) {
+    super(null)
     this.root = null
-    if (typeof(data) === 'number') {
+    if (typeof (data) === 'number') {
       this.root = new AVLNode(data)
     } else if (Array.isArray(data)) {
       this.root = new AVLNode(data[0])
@@ -14,5 +14,3 @@ class AVL extends BST {
     }
   }
 }
-
-module.exports = AVL

@@ -38,7 +38,6 @@ class BSTNode {
   search(val) {
     if (this.value === val)
       return true
-
     if (this.value > val)
       return this.left === null ? false : this.left.search(val)
     else
@@ -46,15 +45,11 @@ class BSTNode {
   }
 
   findMin() {
-    if (this.left === null)
-      return this.value
-    return this.left.findMin()
+    return this.left === null ?  this.value : this.left.findMin()
   }
 
   findMax() {
-    if (this.right === null)
-      return this.value
-    return this.right.findMax()
+    return this.right === null ? this.value : this.right.findMax()
   }
 
   findPredecessor(val) {

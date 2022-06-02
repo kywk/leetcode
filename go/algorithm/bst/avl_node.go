@@ -117,19 +117,6 @@ func (n *AVLNode) rotate() *AVLNode {
 	}
 }
 
-func (n *AVLNode) rotateRight() *AVLNode {
-	result := n.left
-	t := result.right
-
-	n.left = t
-	n.height--
-
-	result.right = n
-	result.height++
-
-	return result
-}
-
 func (n *AVLNode) rotateLeft() *AVLNode {
 	result := n.right
 	t := result.left
@@ -138,6 +125,19 @@ func (n *AVLNode) rotateLeft() *AVLNode {
 	n.height--
 
 	result.left = n
+	result.height++
+
+	return result
+}
+
+func (n *AVLNode) rotateRight() *AVLNode {
+	result := n.left
+	t := result.right
+
+	n.left = t
+	n.height--
+
+	result.right = n
 	result.height++
 
 	return result

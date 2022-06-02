@@ -11,6 +11,10 @@ func newBSTNode(val int) *BSTNode {
 }
 
 func (n *BSTNode) search(val int) bool {
+	if n == nil {
+		return false
+	}
+
 	if n.value > val {
 		return n.left.search(val)
 	} else if n.value < val {

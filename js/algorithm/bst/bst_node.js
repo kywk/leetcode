@@ -7,32 +7,37 @@ class BSTNode {
     this.right = null
   }
 
-  static _removeHelper(val, currentNode) {
-    if (currentNode === null)
-      return null
+  static _insertHelper(val, node) {
+    if (node === null) return new BSTNode(val)
 
-    let result
-    if (val < currentNode.value) {
-      currentNode.left = BSTNode._removeHelper(val, currentNode.left)
-      result = currentNode
-    } else if (currentNode.value < val) {
-      currentNode.right = BSTNode._removeHelper(val, currentNode.right)
-      result = currentNode
+    if (val < node.value)
+      node.left = BSTNode._insertHelper(val, node.left)
+    else
+      node.right = BSTNode._insertHelper(val, node.right)
+    return node
+  }
+
+  static _removeHelper(val, node) {
+    if (node === null) return null
+
+    if (val < node.value) {
+      node.left = BSTNode._removeHelper(val, node.left)
+    } else if (node.value < val) {
+      node.right = BSTNode._removeHelper(val, node.right)
     } else {
-      if ((currentNode.left === null) && (currentNode.right === null))
+      if ((node.left === null) && (node.right === null))
         return null
-      else if (currentNode.left === null)
-        result = currentNode.right
-      else if (currentNode.right === null)
-        result = currentNode.left
+      else if (node.left === null)
+        result = node.right
+      else if (node.right === null)
+        result = node.left
       else {
-        let successor = currentNode.right.findMin()
-        currentNode.value = successor
-        currentNode.right = BSTNode._removeHelper(successor, currentNode.right)
-        result = currentNode
+        let successor = node.right.findMin()
+        node.value = successor
+        node.right = BSTNode._removeHelper(successor, node.right)
       }
     }
-    return result
+    return node
   }
 
   search(val) {
@@ -45,7 +50,7 @@ class BSTNode {
   }
 
   findMin() {
-    return this.left === null ?  this.value : this.left.findMin()
+    return this.left === null ? this.value : this.left.findMin()
   }
 
   findMax() {
@@ -93,17 +98,7 @@ class BSTNode {
   }
 
   insert(val) {
-    if (val < this.value) {
-      if (this.left === null)
-        this.left = new BSTNode(val)
-      else
-        this.left.insert(val)
-    } else {
-      if (this.right === null)
-        this.right = new BSTNode(val)
-      else
-        this.right.insert(val)
-    }
+    return BSTNode._insertHelper(val, this)
   }
 
   remove(val) {

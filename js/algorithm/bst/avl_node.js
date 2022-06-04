@@ -13,111 +13,97 @@ class AVLNode extends BSTNode {
     this.height = 1
   }
 
-  static _heightHelper(currentNode) {
-    if (currentNode !== null)
-      return currentNode.height
-    else
-      return 0
+  static _heightHelper(node) {
+    return node !== null ? node.height : 0
   }
 
-  static _insertHelper(val, currentNode) {
-    if (currentNode === null)
+  static _insertHelper(val, node) {
+    if (node === null)
       return new AVLNode(val)
 
-    if (currentNode.value > val)
-        currentNode.left = AVLNode._insertHelper(val, currentNode.left)
+    if (node.value > val)
+      node.left = AVLNode._insertHelper(val, node.left)
     else
-        currentNode.right = AVLNode._insertHelper(val, currentNode.right)
+      node.right = AVLNode._insertHelper(val, node.right)
 
-    return AVLNode._rotate(currentNode)
+    return AVLNode._rotate(node)
   }
 
-  static _removeHelper(val, currentNode) {
-    if (currentNode === null)
+  static _removeHelper(val, node) {
+    if (node === null)
       return null
 
-    let result
-    if (val < currentNode.value) {
-      currentNode.left = BSTNode._removeHelper(val, currentNode.left)
-      result = currentNode
-    } else if (currentNode.value < val) {
-      currentNode.right = BSTNode._removeHelper(val, currentNode.right)
-      result = currentNode
+    if (val < node.value) {
+      node.left = AVLNode._removeHelper(val, node.left)
+    } else if (node.value < val) {
+      node.right = AVLNode._removeHelper(val, node.right)
     } else {
-      if ((currentNode.left === null) && (currentNode.right === null))
+      if ((node.left === null) && (node.right === null))
         return null
-      else if (currentNode.left === null)
-        result = currentNode.right
-      else if (currentNode.right === null)
-        result = currentNode.left
+      else if (node.left === null)
+        node = node.right
+      else if (node.right === null)
+        node = node.left
       else {
-        let successor = currentNode.right.findMin()
-        currentNode.value = successor
-        currentNode.right = BSTNode._removeHelper(successor, currentNode.right)
-        result = currentNode
+        let successor = node.right.findMin()
+        node.value = successor
+        node.right = AVLNode._removeHelper(successor, node.right)
       }
     }
-    return AVLNode._rotate(result)
+    return AVLNode._rotate(node)
   }
 
-  static _rotate(currentNode) {
-    currentNode._updateHeight()
-    let left = AVLNode._heightHelper(currentNode.left)
-    let right = AVLNode._heightHelper(currentNode.right)
+  static _rotate(node) {
+    let left = AVLNode._heightHelper(node.left)
+    let right = AVLNode._heightHelper(node.right)
     let bf = left - right
 
     if (bf > 1) {
-      if (AVLNode._heightHelper(currentNode.left.left) < AVLNode._heightHelper(currentNode.left.right))
-        currentNode.left = AVLNode._rotateLeft(currentNode.left)
-      return AVLNode._rotateRight(currentNode)
+      if (AVLNode._heightHelper(node.left.left) < AVLNode._heightHelper(node.left.right))
+        node.left = AVLNode._rotateLeft(node.left)
+      return AVLNode._rotateRight(node)
     } else if (bf < -1) {
-      if (AVLNode._heightHelper(currentNode.right.left) > AVLNode._heightHelper(currentNode.right.right))
-        currentNode.right = AVLNode._rotateRight(currentNode.right)
-      return AVLNode._rotateLeft(currentNode)
+      if (AVLNode._heightHelper(node.right.left) > AVLNode._heightHelper(node.right.right))
+        node.right = AVLNode._rotateRight(node.right)
+      return AVLNode._rotateLeft(node)
     } else {
-      return currentNode
+      node._updateHeight()
+      return node
     }
   }
 
-  static _rotateRight(currentNode) {
-    let result = currentNode.left
-    let t = result.right
+  static _rotateLeft(node) {
+    let result = node.right
+    let t = result.left
 
-    currentNode.left = t
-    currentNode.height--
+    node.right = t
+    node.height--
 
-    result.right = currentNode
-    result.height++
-
+    result.left = node
     return result
   }
 
-  static _rotateLeft(currentNode) {
-    let result = currentNode.right
-    let t = result.left
+  static _rotateRight(node) {
+    let result = node.left
+    let t = result.right
 
-    currentNode.right = t
-    currentNode.height--
+    node.left = t
+    node.height--
 
-    result.left = currentNode
-    result.height++
-
+    result.right = node
     return result
   }
 
   _updateHeight() {
     this.height = max(AVLNode._heightHelper(this.left),
-                      AVLNode._heightHelper(this.right)) + 1
+      AVLNode._heightHelper(this.right)) + 1
   }
 
   insert(val) {
-    if (this.value > val)
-      this.left = AVLNode._insertHelper(val, this.left)
-    else
-      this.right = AVLNode._insertHelper(val, this.right)
+    return AVLNode._insertHelper(val, this)
   }
 
-  remove (val) {
+  remove(val) {
     return AVLNode._removeHelper(val, this)
   }
 }

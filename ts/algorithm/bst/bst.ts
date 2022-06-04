@@ -3,7 +3,6 @@ import { BSTNode } from "./bst_node"
 const NOT_FOUND = -1
 
 export class BST {
-
   root: BSTNode | null
 
   constructor(data: number | Array<number> | null) {
@@ -38,16 +37,14 @@ export class BST {
   }
 
   insert(val: number) {
-    if (this.root === null)
-      return
+    if (this.root === null) return
 
     console.log(">> insert:", val)
-    this.root.insert(val)
+    this.root = this.root.insert(val)
   }
 
   remove(val: number) {
-    if (this.root === null)
-      return
+    if (this.root === null) return
 
     console.log(">> remove:", val)
     this.root = this.root.remove(val)

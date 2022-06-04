@@ -6,7 +6,7 @@ const NOTFOUND = -1
 
 type IBSTNode interface {
 	search(int) bool
-	insert(int)
+	insert(int) IBSTNode
 	remove(int) IBSTNode
 	findMin() int
 	findMax() int
@@ -61,7 +61,7 @@ func (bst *BST) Insert(val int) {
 	if bst.root == nil {
 		return
 	}
-	bst.root.insert(val)
+	bst.root = bst.root.insert(val)
 }
 
 func (bst *BST) Remove(val int) {

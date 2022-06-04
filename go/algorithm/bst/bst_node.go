@@ -24,20 +24,21 @@ func (n *BSTNode) search(val int) bool {
 	}
 }
 
-func (n *BSTNode) insert(val int) {
-	if val < n.value {
-		if n.left == nil {
-			n.left = newBSTNode(val)
-		} else {
-			n.left.insert(val)
-		}
-	} else {
-		if n.right == nil {
-			n.right = newBSTNode(val)
-		} else {
-			n.right.insert(val)
-		}
+func (n *BSTNode) insert(val int) IBSTNode {
+	return n.insertHelper(val)
+}
+
+func (n *BSTNode) insertHelper(val int) *BSTNode {
+	if n == nil {
+		return newBSTNode(val)
 	}
+
+	if val < n.value {
+		n.left = n.left.insertHelper(val)
+	} else {
+		n.right = n.right.insertHelper(val)
+	}
+	return n
 }
 
 func (n *BSTNode) remove(val int) IBSTNode {

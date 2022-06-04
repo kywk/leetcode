@@ -5,7 +5,7 @@ const NOT_FOUND = -1
 class BST {
   constructor(data) {
     this.root = null
-    if (typeof(data) === 'number') {
+    if (typeof (data) === 'number') {
       this.root = new BSTNode(data)
     } else if (Array.isArray(data)) {
       this.root = new BSTNode(data[0])
@@ -39,7 +39,7 @@ class BST {
       return
 
     console.log(">> insert:", val)
-    this.root.insert(val)
+    this.root = this.root.insert(val)
   }
 
   remove(val) {

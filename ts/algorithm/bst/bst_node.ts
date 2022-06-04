@@ -53,32 +53,38 @@ export class BSTNode {
       return successor
   }
 
-  static removeHelper(val: number, currentNode: IBSTNode): IBSTNode {
-    if (currentNode === null)
+  static insertHelper(val: number, node: IBSTNode): IBSTNode {
+    if (node === null) return new BSTNode(val)
+
+    if (val < node.value)
+      node.left = BSTNode.insertHelper(val, node.left)
+    else
+      node.right = BSTNode.insertHelper(val, node.right)
+    return node
+  }
+
+  static removeHelper(val: number, node: IBSTNode): IBSTNode {
+    if (node === null)
       return null
 
-    let result
-    if (val < currentNode.value) {
-      currentNode.left = BSTNode.removeHelper(val, currentNode.left)
-      result = currentNode
-    } else if (currentNode.value < val) {
-      currentNode.right = BSTNode.removeHelper(val, currentNode.right)
-      result = currentNode
+    if (val < node.value) {
+      node.left = BSTNode.removeHelper(val, node.left)
+    } else if (node.value < val) {
+      node.right = BSTNode.removeHelper(val, node.right)
     } else {
-      if ((currentNode.left === null) && (currentNode.right === null))
+      if ((node.left === null) && (node.right === null))
         return null
-      else if (currentNode.left === null)
-        result = currentNode.right
-      else if (currentNode.right === null)
-        result = currentNode.left
+      else if (node.left === null)
+        node = node.right
+      else if (node.right === null)
+        node = node.left
       else {
-        let successor = currentNode.right.findMin()
-        currentNode.value = successor
-        currentNode.right = BSTNode.removeHelper(successor, currentNode.right)
-        result = currentNode
+        let successor = node.right.findMin()
+        node.value = successor
+        node.right = BSTNode.removeHelper(successor, node.right)
       }
     }
-    return result
+    return node
   }
 
   public search(val: number): boolean {
@@ -91,36 +97,26 @@ export class BSTNode {
   }
 
   public findMin(): number {
-    return this.left === null ?  this.value : this.left.findMin()
+    return this.left === null ? this.value : this.left.findMin()
   }
 
   public findMax(): number {
     return this.right === null ? this.value : this.right.findMax()
   }
 
-  public findPredecessor(val : number): number{
+  public findPredecessor(val: number): number {
     return BSTNode.findPredecessor(val, this)
   }
 
-  public findSuccessor(val : number): number{
+  public findSuccessor(val: number): number {
     return BSTNode.findSuccessor(val, this)
   }
 
-  public insert(val: number) {
-    if (val < this.value) {
-      if (this.left === null)
-        this.left = new BSTNode(val)
-      else
-        this.left.insert(val)
-    } else {
-      if (this.right === null)
-        this.right = new BSTNode(val)
-      else
-        this.right.insert(val)
-    }
+  public insert(val: number): IBSTNode {
+    return BSTNode.insertHelper(val, this)
   }
 
-  public remove(val: number): BSTNode | null {
+  public remove(val: number): IBSTNode {
     return BSTNode.removeHelper(val, this)
   }
 

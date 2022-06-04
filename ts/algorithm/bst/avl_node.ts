@@ -18,111 +18,97 @@ export class AVLNode extends BSTNode {
     this.height = 1
   }
 
-  static heightHelper(currentNode: IAVLNode): number {
-    if (currentNode !== null)
-      return currentNode.height
-    else
-      return 0
+  static heightHelper(node: IAVLNode): number {
+    return node !== null ? node.height : 0
   }
 
-  static insertHelper(val: number, currentNode: IAVLNode): IAVLNode {
-    if (currentNode === null)
+  static insertHelper(val: number, node: IAVLNode): IAVLNode {
+    if (node === null)
       return new AVLNode(val)
 
-    if (currentNode.value > val)
-        currentNode.left = AVLNode.insertHelper(val, currentNode.left)
+    if (node.value > val)
+      node.left = AVLNode.insertHelper(val, node.left)
     else
-        currentNode.right = AVLNode.insertHelper(val, currentNode.right)
+      node.right = AVLNode.insertHelper(val, node.right)
 
-    return AVLNode.rotate(currentNode)
+    return AVLNode.rotate(node)
   }
 
-  static removeHelper(val:number, currentNode: IAVLNode): IAVLNode {
-    if (currentNode === null)
+  static removeHelper(val: number, node: IAVLNode): IAVLNode {
+    if (node === null)
       return null
 
-    let result
-    if (val < currentNode.value) {
-      currentNode.left = AVLNode.removeHelper(val, currentNode.left)
-      result = currentNode
-    } else if (currentNode.value < val) {
-      currentNode.right = AVLNode.removeHelper(val, currentNode.right)
-      result = currentNode
+    if (val < node.value) {
+      node.left = AVLNode.removeHelper(val, node.left)
+    } else if (node.value < val) {
+      node.right = AVLNode.removeHelper(val, node.right)
     } else {
-      if ((currentNode.left === null) && (currentNode.right === null))
+      if ((node.left === null) && (node.right === null))
         return null
-      else if (currentNode.left === null)
-        result = currentNode.right
-      else if (currentNode.right === null)
-        result = currentNode.left
+      else if (node.left === null)
+        node = node.right
+      else if (node.right === null)
+        node = node.left
       else {
-        let successor = currentNode.right.findMin()
-        currentNode.value = successor
-        currentNode.right = AVLNode.removeHelper(successor, currentNode.right)
-        result = currentNode
+        let successor = node.right.findMin()
+        node.value = successor
+        node.right = AVLNode.removeHelper(successor, node.right)
       }
     }
-    return AVLNode.rotate(result)
+    return AVLNode.rotate(node)
   }
 
-  static rotate(currentNode: IAVLNode): IAVLNode {
-    currentNode!.updateHeight()
-    let left = AVLNode.heightHelper(currentNode!.left)
-    let right = AVLNode.heightHelper(currentNode!.right)
+  static rotate(node: IAVLNode): IAVLNode {
+    let left = AVLNode.heightHelper(node!.left)
+    let right = AVLNode.heightHelper(node!.right)
     let bf = left - right
 
     if (bf > 1) {
-      if (AVLNode.heightHelper(currentNode!.left!.left) < AVLNode.heightHelper(currentNode!.left!.right))
-        currentNode!.left = AVLNode.rotateLeft(currentNode!.left)
-      return AVLNode.rotateRight(currentNode)
+      if (AVLNode.heightHelper(node!.left!.left) < AVLNode.heightHelper(node!.left!.right))
+        node!.left = AVLNode.rotateLeft(node!.left)
+      return AVLNode.rotateRight(node)
     } else if (bf < -1) {
-      if (AVLNode.heightHelper(currentNode!.right!.left) > AVLNode.heightHelper(currentNode!.right!.right))
-        currentNode!.right = AVLNode.rotateRight(currentNode!.right)
-      return AVLNode.rotateLeft(currentNode)
+      if (AVLNode.heightHelper(node!.right!.left) > AVLNode.heightHelper(node!.right!.right))
+        node!.right = AVLNode.rotateRight(node!.right)
+      return AVLNode.rotateLeft(node)
     } else {
-      return currentNode
+      node!.updateHeight()
+      return node
     }
   }
 
-  static rotateRight(currentNode: IAVLNode): IAVLNode {
-    let result = currentNode!.left
+  static rotateRight(node: IAVLNode): IAVLNode {
+    let result = node!.left
     let t = result!.right
 
-    currentNode!.left = t
-    currentNode!.height--
+    node!.left = t
+    node!.height--
 
-    result!.right = currentNode
-    result!.height++
-
+    result!.right = node
     return result
   }
 
-  static rotateLeft(currentNode: IAVLNode): IAVLNode {
-    let result = currentNode!.right
+  static rotateLeft(node: IAVLNode): IAVLNode {
+    let result = node!.right
     let t = result!.left
 
-    currentNode!.right = t
-    currentNode!.height--
+    node!.right = t
+    node!.height--
 
-    result!.left = currentNode
-    result!.height++
-
+    result!.left = node
     return result
   }
 
   private updateHeight() {
     this.height = max(AVLNode.heightHelper(this.left),
-                      AVLNode.heightHelper(this.right)) + 1
+      AVLNode.heightHelper(this.right)) + 1
   }
 
-  public insert(val: number) {
-    if (this.value > val)
-      this.left = AVLNode.insertHelper(val, this.left)
-    else
-      this.right = AVLNode.insertHelper(val, this.right)
+  public insert(val: number): IAVLNode {
+    return AVLNode.insertHelper(val, this)
   }
 
-  public remove (val: number): IAVLNode {
+  public remove(val: number): IAVLNode {
     return AVLNode.removeHelper(val, this)
   }
 }

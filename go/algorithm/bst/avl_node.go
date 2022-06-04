@@ -45,12 +45,8 @@ func (n *AVLNode) search(val int) bool {
 	}
 }
 
-func (n *AVLNode) insert(val int) {
-	if n.value > val {
-		n.left = n.left.insertHelper(val)
-	} else {
-		n.right = n.right.insertHelper(val)
-	}
+func (n *AVLNode) insert(val int) IBSTNode {
+	return n.insertHelper(val)
 }
 
 func (n *AVLNode) insertHelper(val int) *AVLNode {
@@ -63,7 +59,6 @@ func (n *AVLNode) insertHelper(val int) *AVLNode {
 	} else {
 		n.right = n.right.insertHelper(val)
 	}
-
 	return n.rotate()
 }
 
@@ -97,7 +92,6 @@ func (n *AVLNode) removeHelper(val int) *AVLNode {
 }
 
 func (n *AVLNode) rotate() *AVLNode {
-	n.updateHeight()
 	left := n.left.getHeight()
 	right := n.right.getHeight()
 	bf := left - right
@@ -113,6 +107,7 @@ func (n *AVLNode) rotate() *AVLNode {
 		}
 		return n.rotateLeft()
 	} else {
+		n.updateHeight()
 		return n
 	}
 }
@@ -125,8 +120,6 @@ func (n *AVLNode) rotateLeft() *AVLNode {
 	n.height--
 
 	result.left = n
-	result.height++
-
 	return result
 }
 
@@ -138,8 +131,6 @@ func (n *AVLNode) rotateRight() *AVLNode {
 	n.height--
 
 	result.right = n
-	result.height++
-
 	return result
 }
 
@@ -204,6 +195,7 @@ func (n *AVLNode) inorder(buf *[]int) {
 	if n == nil {
 		return
 	}
+
 	n.left.inorder(buf)
 	*buf = append(*buf, n.value)
 	n.right.inorder(buf)

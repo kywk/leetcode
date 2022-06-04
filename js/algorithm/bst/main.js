@@ -21,7 +21,7 @@ function mainBst(args) {
     maxValue = parseInt(args[1])
 
   nums = [40, 54, 89, 29, 37, 18, 64, 51, 60, 55, 98, 92]
-  bst = new AVL(nums)
+  bst = new BST(nums)
   console.log("findPredecessor", 64, bst.findPredecessor(64))
   console.log("findSuccessor", 64, bst.findSuccessor(64))
   console.log("inorder", bst.inorder())

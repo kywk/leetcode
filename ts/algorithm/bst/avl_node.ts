@@ -77,17 +77,6 @@ export class AVLNode extends BSTNode {
     }
   }
 
-  static rotateRight(node: IAVLNode): IAVLNode {
-    let result = node!.left
-    let t = result!.right
-
-    node!.left = t
-    node!.height--
-
-    result!.right = node
-    return result
-  }
-
   static rotateLeft(node: IAVLNode): IAVLNode {
     let result = node!.right
     let t = result!.left
@@ -96,6 +85,17 @@ export class AVLNode extends BSTNode {
     node!.height--
 
     result!.left = node
+    return result
+  }
+
+  static rotateRight(node: IAVLNode): IAVLNode {
+    let result = node!.left
+    let t = result!.right
+
+    node!.left = t
+    node!.height--
+
+    result!.right = node
     return result
   }
 

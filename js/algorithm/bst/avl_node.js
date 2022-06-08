@@ -21,7 +21,7 @@ class AVLNode extends BSTNode {
     if (node === null)
       return new AVLNode(val)
 
-    if (node.value > val)
+    if (val < node.value)
       node.left = AVLNode._insertHelper(val, node.left)
     else
       node.right = AVLNode._insertHelper(val, node.right)
